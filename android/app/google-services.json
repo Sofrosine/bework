@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "893247641601",
+    "firebase_url": "https://beworkattendance.firebaseio.com",
+    "project_id": "beworkattendance",
+    "storage_bucket": "beworkattendance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893247641601:android:54548ca7c3e8b644084800",
+        "android_client_info": {
+          "package_name": "com.bework"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893247641601-h9j81t5e1cokqnf437idm4objecbhrmh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bework",
+            "certificate_hash": "e31ff331f782a6c73c0fa44a4b33bf173838c87c"
+          }
+        },
+        {
+          "client_id": "893247641601-4bfmui3sr8h2ntqes2g28sklkrl37feh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe1wDFQjS-6-y4TFLAEMQwtGZWnn2upsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893247641601-4bfmui3sr8h2ntqes2g28sklkrl37feh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

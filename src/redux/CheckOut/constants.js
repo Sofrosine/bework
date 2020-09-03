@@ -1,0 +1,3 @@
+export const CHECK_OUT = 'CHECK_OUT';
+export const CHECK_OUT_FAILED = 'CHECK_OUT_FAILED';
+export const CHECK_OUT_SUCCESS = 'CHECK_OUT_SUCCESS';
