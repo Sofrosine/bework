@@ -61,6 +61,7 @@ export const checkInAction = (userFaceId, form, user, navigation) => {
           location: user.location,
           nik: user.nik,
           user_id: user_id,
+          area: user.area,
           out: false,
         });
       const userData = await Firebase.database()

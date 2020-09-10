@@ -25,7 +25,7 @@ const Home = ({navigation}) => {
     name: '',
     location: '',
     today_attendance: '',
-    hasFace: '', 
+    hasFace: '',
   });
   const user_id = Firebase.auth().currentUser.uid;
   const signOut = () => {
@@ -139,11 +139,10 @@ const Home = ({navigation}) => {
           onPress={
             user && !user.today_attendance
               ? user.hasFace
-                ? () =>
-                    navigation.navigate('UserLocation', {status: 'check-in'})
+                ? () => navigation.replace('UserLocation', {status: 'check-in'})
                 : () =>
-                    navigation.navigate('FaceRecognition', {status: 'register'})
-              : () => navigation.navigate('UserLocation', {status: 'check-out'})
+                    navigation.replace('FaceRecognition', {status: 'register'})
+              : () => navigation.replace('UserLocation', {status: 'check-out'})
           }
           text={
             user && !user.today_attendance

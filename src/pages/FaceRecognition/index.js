@@ -15,6 +15,7 @@ import {
   checkOutAction,
 } from '../../redux/actions';
 import {colors, fonts} from '../../utils';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function FaceRecognition({navigation, route}) {
   const {status} = route.params;
@@ -32,7 +33,7 @@ function FaceRecognition({navigation, route}) {
   const dispatch = useDispatch();
 
   const takePicture = async function (camera) {
-    const options = {quality: 1, base64: true, mirrorImage: false};
+    const options = {quality: 1, base64: true, mirrorImage: true};
     const data = await camera.takePictureAsync(options);
     console.log('take picture data', data);
     const formData = new FormData();
@@ -96,6 +97,15 @@ function FaceRecognition({navigation, route}) {
                 justifyContent: 'flex-end',
                 backgroundColor: 'rgba(0,0,0,0.4)',
               }}>
+              <TouchableOpacity
+                onPress={() => navigation.replace('Home')}
+                style={styles.backButton}>
+                <Icon
+                  name="chevron-left"
+                  color={colors.background.yellow}
+                  size={24}
+                />
+              </TouchableOpacity>
               <View style={styles.canvas} />
               <TouchableOpacity
                 onPress={() => takePicture(camera)}
@@ -165,5 +175,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 24,
     alignSelf: 'center',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 9999,
+    backgroundColor: 'white',
+    height: 40,
+    width: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
   },
 });
