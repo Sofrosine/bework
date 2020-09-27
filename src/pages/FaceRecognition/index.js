@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Easing,
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {useDispatch} from 'react-redux';
@@ -16,9 +17,22 @@ import {
 } from '../../redux/actions';
 import {colors, fonts} from '../../utils';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Animated from 'react-native-reanimated';
 
 function FaceRecognition({navigation, route}) {
   const {status} = route.params;
+  const [state, setState] = useState({
+    rightMouth: {},
+    leftMouth: {},
+    rightEar: {},
+    leftEar: {},
+    rightCheek: {},
+    leftCheek: {},
+    leftEye: {},
+    rightEye: {},
+    bottomMouth: {},
+    noseBase: {},
+  });
   const [user, setUser] = useState({
     name: '',
     location: '',
@@ -31,9 +45,18 @@ function FaceRecognition({navigation, route}) {
   });
   const user_id = Firebase.auth().currentUser.uid;
   const dispatch = useDispatch();
+  const [buttonPosition, setButtonPosition] = useState(
+    new Animated.Value(-200),
+  );
+  const [detectStatus, setDetecStatus] = useState('noface');
 
   const takePicture = async function (camera) {
-    const options = {quality: 1, base64: true, mirrorImage: true};
+    const options = {
+      quality: 1,
+      base64: true,
+      mirrorImage: true,
+      fixOrientation: true,
+    };
     const data = await camera.takePictureAsync(options);
     console.log('take picture data', data);
     const formData = new FormData();
@@ -60,6 +83,50 @@ function FaceRecognition({navigation, route}) {
     await setUser(data.val());
   };
 
+  const handlePosition = async (res) => {
+    if (res.faces[0].rightMouthPosition) {
+      await setState({
+        rightMouth: res.faces[0].rightMouthPosition,
+        rightEye: res.faces[0].rightEyePosition,
+      });
+      if (detectStatus === 'noface') {
+        if (Math.round(state.rightMouth.x) === 171) {
+          setDetecStatus('face');
+          Animated.timing(buttonPosition, {
+            toValue: 0,
+            duration: 2000,
+            easing: Easing.linear,
+          }).start();
+        }
+        if (Math.round(state.rightMouth.x) === 170) {
+          setDetecStatus('face');
+          Animated.timing(buttonPosition, {
+            toValue: 0,
+            duration: 2000,
+            easing: Easing.linear,
+          }).start();
+        }
+        if (Math.round(state.rightMouth.x) === 169) {
+          setDetecStatus('face');
+          Animated.timing(buttonPosition, {
+            toValue: 0,
+            duration: 2000,
+            easing: Easing.linear,
+          }).start();
+        }
+        if (Math.round(state.rightMouth.x) === 168) {
+          setDetecStatus('face');
+          Animated.timing(buttonPosition, {
+            toValue: 0,
+            duration: 2000,
+            easing: Easing.linear,
+          }).start();
+        } else {
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     gettingData();
   }, []);
@@ -83,7 +150,7 @@ function FaceRecognition({navigation, route}) {
           buttonNegative: 'Cancel',
         }}
         faceDetectionMode={RNCamera.Constants.FaceDetection.Mode.accurate}
-        // onFacesDetected={(res) => console.log('reees', res)}
+        onFacesDetected={(res) => handlePosition(res)}
         faceDetectionLandmarks={RNCamera.Constants.FaceDetection.Landmarks.all}
         faceDetectionClassifications={
           RNCamera.Constants.FaceDetection.Classifications.all
@@ -107,11 +174,18 @@ function FaceRecognition({navigation, route}) {
                 />
               </TouchableOpacity>
               <View style={styles.canvas} />
-              <TouchableOpacity
-                onPress={() => takePicture(camera)}
-                style={styles.capture}>
-                <Text style={styles.captureText}>Take Photo</Text>
-              </TouchableOpacity>
+              <Animated.View
+                style={{
+                  position: 'absolute',
+                  bottom: buttonPosition,
+                  width: '100%',
+                }}>
+                <TouchableOpacity
+                  onPress={() => takePicture(camera)}
+                  style={styles.capture}>
+                  <Text style={styles.captureText}>Take Photo</Text>
+                </TouchableOpacity>
+              </Animated.View>
             </View>
           );
         }}
